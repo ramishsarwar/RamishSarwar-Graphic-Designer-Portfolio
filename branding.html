@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Branding &amp; Visual Identity — Ramish Sarwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0d0c0a; --panel:#161410; --paper:#ede6d6; --paper-dim:#9c9384;
+    --tally:#e8412c; --teal:#3c9089; --amber:#d9a441; --ash:#3a362f; --ash-soft:#26221c;
+    --font-display:'Bebas Neue', sans-serif; --font-mono:'JetBrains Mono', monospace; --font-body:'Space Grotesk', sans-serif;
+    --chrome-h:56px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--void); color:var(--paper); font-family:var(--font-body); padding-top:var(--chrome-h); }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--tally); color:var(--paper); }
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  .chrome{
+    position:fixed; top:0; left:0; right:0; height:var(--chrome-h);
+    display:flex; align-items:center; justify-content:space-between; padding:0 24px;
+    background:rgba(13,12,10,.92); border-bottom:1px solid var(--ash); z-index:40;
+    font-family:var(--font-mono); font-size:12px;
+  }
+  .back-link{ display:flex; align-items:center; gap:8px; color:var(--paper-dim); }
+  .back-link:hover{ color:var(--paper); }
+  .chrome-mark{ font-family:var(--font-display); font-size:20px; }
+  .chrome-mark span{ color:var(--tally); }
+
+  .seq{ font-family:var(--font-mono); font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .seq::before{ content:""; width:22px; height:1px; background:var(--ash); }
+
+  .hero-block{ padding:64px 0 40px; border-bottom:1px solid var(--ash-soft); }
+  .proj-title{ font-family:var(--font-display); font-size:clamp(40px,7.5vw,80px); line-height:.95; margin-bottom:18px; }
+  .proj-role{ font-family:var(--font-mono); font-size:12.5px; color:var(--teal); display:block; margin-bottom:20px; }
+  .proj-desc{ color:var(--paper-dim); font-size:15.5px; max-width:62ch; }
+
+  .gallery-section{ padding:44px 0 60px; }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:16px;
+    justify-content:center;
+    max-width:960px;
+    margin:0 auto;
+  }
+  .tile{
+    position:relative; border:1px solid var(--ash); aspect-ratio:1/1; background:var(--panel);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .tile img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .insta-block{ text-align:center; padding:72px 0; }
+  .insta-block h3{ font-family:var(--font-display); font-size:clamp(30px,5vw,50px); margin-bottom:20px; }
+  .btn{
+    font-family:var(--font-mono); font-size:13px; padding:14px 24px; display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--tally); background:var(--tally); color:var(--void); font-weight:600; cursor:pointer;
+  }
+  .btn:hover{ background:#ff5a3f; }
+  .btn .tri{ border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:8px solid currentColor; }
+
+  footer{ padding:32px 0; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); }
+</style>
+</head>
+<body>
+  <header class="chrome">
+    <a class="back-link" href="index.html">← BACK</a>
+    <span class="chrome-mark">RS<span>.</span></span>
+  </header>
+
+  <div class="hero-block wrap">
+    <div class="seq">PROJECT — BRANDING &amp; VISUAL IDENTITY</div>
+    <h1 class="proj-title">Branding &amp; Visual Identity</h1>
+    <span class="proj-role">Freelance &amp; Client Work</span>
+    <p class="proj-desc">Logos and complete visual identities for brands and digital projects — reel covers, banners, ads and branded templates built to hold together across every platform a client posts to, applying typography, composition and hierarchy consistently.</p>
+  </div>
+
+  <div class="gallery-section wrap">
+    <div class="gallery-grid">
+      <div class="tile"><img src="Everlane Logo.png" alt="Everlane logo design"></div>
+      <div class="tile"><img src="logo apart.png" alt="Alternative logo composition"></div>
+      <div class="tile"><img src="Everlane media post.png" alt="Everlane media post design"></div>
+      <div class="tile"><img src="Everlane event flyer.png" alt="Everlane event flyer design"></div>
+      <div class="tile"><img src="event flyer art.png" alt="Event flyer artwork"></div>
+    </div>
+  </div>
+
+  <footer>© 2026 RAMISH SARWAR — BRANDING.PROJ</footer>
+</body>
+</html>

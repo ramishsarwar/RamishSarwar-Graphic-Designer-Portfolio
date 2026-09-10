@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Move — Ramish Sarwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0d0c0a; --panel:#161410; --paper:#ede6d6; --paper-dim:#9c9384;
+    --tally:#e8412c; --teal:#3c9089; --amber:#d9a441; --ash:#3a362f; --ash-soft:#26221c;
+    --font-display:'Bebas Neue', sans-serif; --font-mono:'JetBrains Mono', monospace; --font-body:'Space Grotesk', sans-serif;
+    --chrome-h:56px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--void); color:var(--paper); font-family:var(--font-body); padding-top:var(--chrome-h); }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--tally); color:var(--paper); }
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  .chrome{
+    position:fixed; top:0; left:0; right:0; height:var(--chrome-h);
+    display:flex; align-items:center; justify-content:space-between; padding:0 24px;
+    background:rgba(13,12,10,.92); border-bottom:1px solid var(--ash); z-index:40;
+    font-family:var(--font-mono); font-size:12px;
+  }
+  .back-link{ display:flex; align-items:center; gap:8px; color:var(--paper-dim); }
+  .back-link:hover{ color:var(--paper); }
+  .chrome-mark{ font-family:var(--font-display); font-size:20px; }
+  .chrome-mark span{ color:var(--tally); }
+
+  .seq{ font-family:var(--font-mono); font-size:12px; color:var(--paper-dim); display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .seq::before{ content:""; width:22px; height:1px; background:var(--ash); }
+
+  .hero-block{ padding:64px 0 40px; border-bottom:1px solid var(--ash-soft); }
+  .proj-title{ font-family:var(--font-display); font-size:clamp(44px,8vw,88px); line-height:.95; margin-bottom:18px; }
+  .proj-role{ font-family:var(--font-mono); font-size:12.5px; color:var(--teal); display:block; margin-bottom:20px; }
+  .proj-desc{ color:var(--paper-dim); font-size:15.5px; max-width:62ch; }
+
+  section{ padding:64px 0; }
+  .h2{ font-family:var(--font-display); font-size:clamp(30px,4.5vw,46px); margin-bottom:36px; }
+
+  .reel-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:28px; }
+  .clip-frame{
+    position:relative; border:1px solid var(--ash); aspect-ratio:9/14; background:var(--panel);
+    display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:12px;
+  }
+  .clip-frame video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .clip-frame .tc-badge{
+    position:absolute; top:10px; left:10px; font-family:var(--font-mono); font-size:10px;
+    background:rgba(13,12,10,.75); padding:4px 7px; color:var(--paper-dim); border:1px solid var(--ash-soft);
+  }
+  .clip-frame .placeholder-note{
+    position:absolute; bottom:10px; left:10px; right:10px; font-family:var(--font-mono); font-size:9px;
+    color:var(--paper-dim); background:rgba(13,12,10,.75); padding:6px 8px; border:1px dashed var(--ash); text-align:center;
+  }
+  .clip-frame .play-ring{
+    width:52px; height:52px; border-radius:50%; border:1px solid var(--paper-dim);
+    display:flex; align-items:center; justify-content:center; background:rgba(13,12,10,.4);
+  }
+  .clip-frame .tri{ border-top:8px solid transparent; border-bottom:8px solid transparent; border-left:12px solid var(--paper); margin-left:3px; }
+  .reel-caption{ font-family:var(--font-mono); font-size:12.5px; color:var(--paper); }
+  .reel-caption span{ display:block; font-size:10.5px; color:var(--paper-dim); margin-top:3px; }
+
+  .insta-block{
+    text-align:center; padding:72px 0; border-top:1px solid var(--ash-soft); border-bottom:1px solid var(--ash-soft);
+  }
+  .insta-block h3{ font-family:var(--font-display); font-size:clamp(30px,5vw,50px); margin-bottom:20px; }
+  .btn{
+    font-family:var(--font-mono); font-size:13px; padding:14px 24px; display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--tally); background:var(--tally); color:var(--void); font-weight:600; cursor:pointer;
+  }
+  .btn:hover{ background:#ff5a3f; }
+  .btn .tri{ border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:8px solid currentColor; }
+
+  footer{ padding:32px 0; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); }
+</style>
+</head>
+<body>
+  <header class="chrome">
+    <a class="back-link" href="index.html">← BACK</a>
+    <span class="chrome-mark">RS<span>.</span></span>
+  </header>
+
+  <div class="hero-block wrap">
+    <div class="seq">PROJECT — JUST MOVE</div>
+    <h1 class="proj-title">Just Move</h1>
+    <span class="proj-role">Social Media Manager / Video &amp; Graphic Designer</span>
+    <p class="proj-desc">A full content system for a premium Airbnb apartment brand in Islamabad — Reels, feed posts, stories and promo video under one visual identity, run end to end from concept and filming through edit, motion graphics and publishing.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="seq">REEL GALLERY</div>
+      <h2 class="h2">Featured reels.</h2>
+      <div class="reel-grid">
+
+        <div>
+          <div class="clip-frame">
+            <div class="tc-badge">REEL_01</div>
+            <video src="WhatsApp Video 2026-09-10 at 10.21.11 PM_trimmed.mp4" controls playsinline preload="metadata" controlsList="nodownload noplaybackrate" disablePictureInPicture></video>
+          </div>
+          <div class="reel-caption">Move-in Walkthrough<span>Apartment tour, full edit + motion titles</span></div>
+        </div>
+
+        <div>
+          <div class="clip-frame">
+            <div class="tc-badge">REEL_02</div>
+            <video src="WhatsApp Video 2026-09-10 at 10.21.07 PM.mp4" controls playsinline preload="metadata" controlsList="nodownload noplaybackrate" disablePictureInPicture></video>
+          </div>
+          <div class="reel-caption">Neighbourhood Guide<span>Local spots, kinetic type overlays</span></div>
+        </div>
+
+        <div>
+          <div class="clip-frame">
+            <div class="tc-badge">REEL_03</div>
+            <video src="WhatsApp Video 2026-09-10 at 10.16.22 PM.mp4" controls playsinline preload="metadata" controlsList="nodownload noplaybackrate" disablePictureInPicture></video>
+          </div>
+          <div class="reel-caption">Before &amp; After<span>Interior transformation cut</span></div>
+        </div>
+
+        <div>
+          <div class="clip-frame">
+            <div class="tc-badge">REEL_04</div>
+            <video src="WhatsApp Video 2026-09-10 at 10.16.16 PM.mp4" controls playsinline preload="metadata" controlsList="nodownload noplaybackrate" disablePictureInPicture></video>
+          </div>
+          <div class="reel-caption">Guest Review Highlight<span>Testimonial-style short</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="insta-block wrap">
+    <h3>Follow the full feed.</h3>
+    <a class="btn" href="#" target="_blank" rel="noopener"><!-- TODO: add real Instagram link --><span class="tri"></span> View on Instagram</a>
+  </div>
+
+  <footer>© 2026 RAMISH SARWAR — JUST_MOVE.PROJ</footer>
+  <script>
+    const videos = document.querySelectorAll('.clip-frame video');
+    videos.forEach((video) => {
+      video.addEventListener('play', () => {
+        videos.forEach((otherVideo) => {
+          if (otherVideo !== video) {
+            otherVideo.pause();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
