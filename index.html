@@ -522,10 +522,34 @@
   .modal-close:hover{ border-color:var(--tally); color:var(--tally); }
   .modal-body{ aspect-ratio:16/9; }
   .modal-body .clip-frame{ height:100%; aspect-ratio:auto; border:none; }
+.enter-overlay{
+  position:fixed; inset:0; z-index:200;
+  background:var(--void);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .5s ease;
+}
+.enter-overlay.hide{
+  opacity:0;
+  pointer-events:none;
+}
+.enter-box{
+  text-align:center;
+}
+.enter-box .chrome-mark{
+  font-size:40px;
+  display:block;
+  margin-bottom:14px;
+}
+.enter-box p{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--paper-dim);
+  margin-bottom:26px;
+  letter-spacing:.04em;
+}
 </style>
 </head>
 <body>
-
   <div class="corner tl"></div>
   <div class="corner tr"></div>
   <div class="corner bl"></div>
@@ -568,10 +592,20 @@
           <div class="monitor" aria-hidden="true">
             <div class="monitor-head"><span>PREVIEW.MOV</span><span>4K · 24FPS</span></div>
             <div class="monitor-screen">
-              <div class="play-ring"><span class="tri"></span></div>
-              <div class="waveform" id="waveform"></div>
-            </div>
-            <div class="monitor-foot"><span>00:00:12:04</span><span>/ 00:02:47:19</span></div>
+  <video
+    id="homeShowreel"
+    src="showreel.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+    style="width:100%; height:100%; object-fit:cover;">
+</video>
+</div>
+            <div class="monitor-foot">
+  <span>00:00:00:00</span>
+  <span>/ 00:00:30:00</span>
+</div>
           </div>
         </div>
       </div>
@@ -765,14 +799,15 @@
         <button class="modal-close" id="closeReel">CLOSE ✕</button>
       </div>
       <div class="modal-body">
-        <div class="clip-frame">
-          <div class="play-ring"><span class="tri"></span></div>
-          <!-- TODO: replace with your real showreel —
-               <video src="showreel.mp4" controls autoplay></video>
-               or an embedded YouTube/Vimeo/Instagram player -->
-          <div class="placeholder-note">DROP YOUR SHOWREEL HERE</div>
-        </div>
-      </div>
+  <video 
+    id="modalShowreel"
+    src="showreel.mp4" 
+    controls 
+    autoplay 
+    playsinline
+    style="width:100%; height:100%; object-fit:contain; display:block;">
+  </video>
+</div>
     </div>
   </div>
 
@@ -830,41 +865,106 @@
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
-
-  // showreel modal
+    // showreel modal — sirf modal + elements ka reference
   const modal = document.getElementById('reelModal');
-  document.getElementById('openReel').addEventListener('click', ()=> modal.classList.add('open'));
-  document.getElementById('closeReel').addEventListener('click', ()=> modal.classList.remove('open'));
-  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('open'); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') modal.classList.remove('open'); });
+  const modalVideo = document.getElementById('modalShowreel');
 
-  // autoplay homepage preview when visible, pause when out of view
-  const homeReel = document.querySelector('.scroll-autoplay');
-  if (homeReel) {
-    const tryPlay = () => homeReel.play().catch(() => {});
+  const homeShowreel = document.getElementById('homeShowreel');
+  const monitor = homeShowreel?.closest('.monitor');
 
-    function syncReelPlayback() {
-      const rect = homeReel.getBoundingClientRect();
-      const viewportH = window.innerHeight || document.documentElement.clientHeight;
-      const visiblePx = Math.min(rect.bottom, viewportH) - Math.max(rect.top, 0);
-      const visibleRatio = visiblePx > 0 ? visiblePx / rect.height : 0;
+  let userMuted = false;
+  let userInteracted = false;
+  let muteButton = null;
 
-      if (visibleRatio >= 0.35) {
-        tryPlay();
-      } else {
-        homeReel.pause();
+  function openModal() {
+    modal.classList.add('open');
+    modalVideo.currentTime = 0;
+    modalVideo.muted = false;
+    modalVideo.play().catch(() => {});
+
+    if (homeShowreel) {
+      homeShowreel.pause();
+      homeShowreel.muted = true;
+      if (muteButton) muteButton.textContent = '🔇';
+    }
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modalVideo.pause();
+
+    if (homeShowreel && monitor) {
+      const rect = monitor.getBoundingClientRect();
+      const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (isVisible) {
+        homeShowreel.muted = userInteracted ? userMuted : true;
+        homeShowreel.play().catch(() => {});
+        if (muteButton) muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
       }
     }
+  }
 
-    window.addEventListener('scroll', syncReelPlayback, { passive: true });
-    window.addEventListener('resize', syncReelPlayback);
+  document.getElementById('openReel').addEventListener('click', openModal);
+  document.getElementById('closeReel').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 
-    const reelObserver = new IntersectionObserver(() => {
-      syncReelPlayback();
-    }, { threshold: [0, 0.35, 0.6, 1] });
+  // HERO SHOWREEL — auto play/pause + auto mute/unmute on scroll + auto-unmute on first interaction
+  if (homeShowreel && monitor) {
 
-    reelObserver.observe(homeReel);
-    syncReelPlayback();
+    homeShowreel.muted = true;
+
+    muteButton = document.createElement('button');
+    muteButton.className = 'preview-mute';
+    muteButton.type = 'button';
+    muteButton.textContent = '🔇';
+    muteButton.setAttribute('aria-label', 'Mute or unmute preview');
+    monitor.appendChild(muteButton);
+
+    muteButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userMuted = !userMuted;
+      homeShowreel.muted = userMuted;
+      muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
+    });
+
+    monitor.style.cursor = 'pointer';
+    monitor.addEventListener('click', (e) => {
+      if (e.target === muteButton) return;
+      openModal();
+    });
+
+    function unlockSound() {
+      if (userInteracted) return;
+      userInteracted = true;
+      if (!userMuted && !modal.classList.contains('open')) {
+        homeShowreel.muted = false;
+        muteButton.textContent = '🔊';
+      }
+    }
+    document.addEventListener('click', unlockSound, { once: true });
+    document.addEventListener('pointerdown', unlockSound, { once: true });
+    document.addEventListener('scroll', unlockSound, { once: true, passive: true });
+    document.addEventListener('keydown', unlockSound, { once: true });
+    document.addEventListener('touchstart', unlockSound, { once: true, passive: true });
+
+    const showreelObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (modal.classList.contains('open')) return; // modal khula ho tu kuch mat karo
+        if (entry.isIntersecting) {
+          homeShowreel.muted = userInteracted ? userMuted : true;
+          homeShowreel.play().catch(() => {});
+          muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
+        } else {
+          homeShowreel.pause();
+          homeShowreel.muted = true;
+          muteButton.textContent = '🔇';
+        }
+      },
+      { threshold: 0 }
+    );
+
+    showreelObserver.observe(monitor);
   }
 </script>
 </body>
