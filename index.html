@@ -1,554 +1,994 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramish Sarwar — Video Editor &amp; Graphic Designer</title>
-<link rel="icon" type="image/jpeg" href="favicon.jpg">
-<link rel="icon" type="image/jpeg" href="favicon.jpg">
-<meta name="description" content="Ramish Sarwar — Video Editor, Motion Graphics &amp; Brand Designer. Reels, short-form content, AI-assisted production and visual identity work.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  /* ============ TOKENS ============ */
-  :root{
-    --void:#0d0c0a;
-    --panel:#161410;
-    --panel-2:#1e1a14;
-    --paper:#ede6d6;
-    --paper-dim:#9c9384;
-    --tally:#e8412c;
-    --teal:#3c9089;
-    --amber:#d9a441;
-    --ash:#3a362f;
-    --ash-soft:#26221c;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramish Sarwar — Video Editor &amp; Graphic Designer</title>
+  <link rel="icon" type="image/jpeg" href="favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="favicon.jpg">
+  <meta name="description"
+    content="Ramish Sarwar — Video Editor, Motion Graphics &amp; Brand Designer. Reels, short-form content, AI-assisted production and visual identity work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ============ TOKENS ============ */
+    :root {
+      --void: #0d0c0a;
+      --panel: #161410;
+      --panel-2: #1e1a14;
+      --paper: #ede6d6;
+      --paper-dim: #9c9384;
+      --tally: #e8412c;
+      --teal: #3c9089;
+      --amber: #d9a441;
+      --ash: #3a362f;
+      --ash-soft: #26221c;
 
-    --font-display:'Bebas Neue', sans-serif;
-    --font-mono:'JetBrains Mono', monospace;
-    --font-body:'Space Grotesk', sans-serif;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Space Grotesk', sans-serif;
 
-    --chrome-h:56px;
-    --scrub-h:52px;
-  }
+      --chrome-h: 56px;
+      --scrub-h: 52px;
+    }
 
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
-  body{
-    background:var(--void);
-    color:var(--paper);
-    font-family:var(--font-body);
-    line-height:1.5;
-    padding-top:var(--chrome-h);
-    padding-bottom:var(--scrub-h);
-    overflow-x:hidden;
-  }
-  ::selection{ background:var(--tally); color:var(--paper); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  a{ color:inherit; text-decoration:none; }
-  ul{ list-style:none; }
-  img{ max-width:100%; display:block; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  :focus-visible{
-    outline:2px solid var(--amber);
-    outline-offset:3px;
-  }
+    body {
+      background: var(--void);
+      color: var(--paper);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      padding-top: var(--chrome-h);
+      padding-bottom: var(--scrub-h);
+      overflow-x: hidden;
+    }
 
-  .wrap{
-    max-width:1180px;
-    margin:0 auto;
-    padding:0 32px;
-  }
+    ::selection {
+      background: var(--tally);
+      color: var(--paper);
+    }
 
-  /* film grain texture */
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:2;
-    opacity:.05;
-    mix-blend-mode:overlay;
-    background-image:
-      repeating-linear-gradient(0deg, rgba(255,255,255,.6) 0px, transparent 1px, transparent 2px),
-      repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0px, transparent 1px, transparent 3px);
-  }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* viewfinder corner marks */
-  .corner{
-    position:fixed;
-    width:20px; height:20px;
-    border-color:var(--ash);
-    border-style:solid;
-    border-width:0;
-    z-index:5;
-    pointer-events:none;
-  }
-  .corner.tl{ top:calc(var(--chrome-h) + 12px); left:12px; border-top-width:2px; border-left-width:2px; }
-  .corner.tr{ top:calc(var(--chrome-h) + 12px); right:12px; border-top-width:2px; border-right-width:2px; }
-  .corner.bl{ bottom:calc(var(--scrub-h) + 12px); left:12px; border-bottom-width:2px; border-left-width:2px; }
-  .corner.br{ bottom:calc(var(--scrub-h) + 12px); right:12px; border-bottom-width:2px; border-right-width:2px; }
-  @media (max-width:720px){ .corner{ display:none; } }
+    ul {
+      list-style: none;
+    }
 
-  /* ============ TOP CHROME BAR ============ */
-  .chrome{
-    position:fixed; top:0; left:0; right:0;
-    height:var(--chrome-h);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 24px;
-    background:rgba(13,12,10,.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--ash);
-    z-index:40;
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:.03em;
-  }
-  .chrome-left{ display:flex; align-items:center; gap:10px; }
-  .rec-dot{
-    width:8px; height:8px; border-radius:50%;
-    background:var(--tally);
-    animation:pulse 1.6s ease-in-out infinite;
-    flex-shrink:0;
-  }
-  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
-  .chrome-mark{
-    font-family:var(--font-display);
-    font-size:20px;
-    letter-spacing:.03em;
-    color:var(--paper);
-  }
-  .chrome-mark span{ color:var(--tally); }
-  .chrome-tc{
-    color:var(--paper-dim);
-    display:none;
-  }
-  @media (min-width:720px){ .chrome-tc{ display:block; } }
-  .chrome-status{
-    display:flex; align-items:center; gap:8px;
-    color:var(--teal);
-    border:1px solid var(--ash);
-    padding:5px 10px;
-  }
-  .chrome-status i{
-    width:6px; height:6px; border-radius:50%; background:var(--teal);
-  }
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-  /* ============ BOTTOM SCRUB NAV ============ */
-  .scrub{
-    position:fixed; bottom:0; left:0; right:0;
-    height:var(--scrub-h);
-    background:rgba(13,12,10,.95);
-    border-top:1px solid var(--ash);
-    z-index:40;
-    display:flex; flex-direction:column;
-    justify-content:center;
-  }
-  .scrub-track{
-    height:2px; background:var(--ash-soft); position:relative; width:100%;
-  }
-  .scrub-fill{
-    position:absolute; top:0; left:0; height:100%;
-    background:var(--tally);
-    width:0%;
-  }
-  .scrub-list{
-    display:flex; align-items:center; gap:0;
-    overflow-x:auto;
-    scrollbar-width:none;
-    height:calc(var(--scrub-h) - 2px);
-  }
-  .scrub-list::-webkit-scrollbar{ display:none; }
-  .scrub-list a{
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--paper-dim);
-    white-space:nowrap;
-    padding:0 16px;
-    height:100%;
-    display:flex; align-items:center; gap:8px;
-    border-right:1px solid var(--ash-soft);
-    transition:color .2s ease;
-  }
-  .scrub-list a:hover{ color:var(--paper); }
-  .scrub-list a.active{ color:var(--tally); }
-  .scrub-list a .dot{
-    width:5px; height:5px; border-radius:50%; background:var(--ash);
-  }
-  .scrub-list a.active .dot{ background:var(--tally); }
+    :focus-visible {
+      outline: 2px solid var(--amber);
+      outline-offset: 3px;
+    }
 
-  /* ============ SEQ LABEL ============ */
-  .seq{
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--paper-dim);
-    display:flex; align-items:center; gap:10px;
-    margin-bottom:18px;
-  }
-  .seq::before{
-    content:"";
-    width:22px; height:1px; background:var(--ash);
-  }
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
 
-  /* ============ HERO ============ */
-  .hero{
-    padding:72px 0 88px;
-    min-height:calc(100vh - var(--chrome-h) - var(--scrub-h));
-    display:flex; align-items:center;
-  }
-  .hero-grid{
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
-    gap:56px;
-    align-items:center;
-    width:100%;
-  }
-  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+    /* film grain texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: .05;
+      mix-blend-mode: overlay;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .6) 0px, transparent 1px, transparent 2px),
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, .5) 0px, transparent 1px, transparent 3px);
+    }
 
-  .hero-title{
-    font-family:var(--font-display);
-    font-size:clamp(52px, 9vw, 108px);
-    line-height:.92;
-    letter-spacing:.01em;
-    color:var(--paper);
-    overflow:hidden;
-  }
-  .hero-title .line{
-    display:block;
-    transform:translateY(110%);
-    animation:wipeUp .9s cubic-bezier(.16,.9,.2,1) forwards;
-  }
-  .hero-title .line:nth-child(2){ animation-delay:.12s; color:var(--tally); }
-  @keyframes wipeUp{ to{ transform:translateY(0); } }
+    /* viewfinder corner marks */
+    .corner {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-color: var(--ash);
+      border-style: solid;
+      border-width: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
 
-  .role-cycle{
-    font-family:var(--font-mono);
-    font-size:15px;
-    letter-spacing:.06em;
-    color:var(--teal);
-    margin-top:22px;
-    height:20px;
-    display:flex; align-items:center; gap:8px;
-  }
-  .role-cycle .blink{
-    display:inline-block; width:8px; height:16px; background:var(--teal);
-    animation:blink 1s steps(1) infinite;
-  }
-  @keyframes blink{ 50%{ opacity:0; } }
+    .corner.tl {
+      top: calc(var(--chrome-h) + 12px);
+      left: 12px;
+      border-top-width: 2px;
+      border-left-width: 2px;
+    }
 
-  .hero-copy{
-    max-width:46ch;
-    margin-top:26px;
-    color:var(--paper-dim);
-    font-size:16px;
-  }
+    .corner.tr {
+      top: calc(var(--chrome-h) + 12px);
+      right: 12px;
+      border-top-width: 2px;
+      border-right-width: 2px;
+    }
 
-  .hero-ctas{
-    display:flex; align-items:center; gap:16px;
-    margin-top:38px;
-    flex-wrap:wrap;
-  }
-  .btn{
-    font-family:var(--font-mono);
-    font-size:13px;
-    letter-spacing:.04em;
-    padding:14px 22px;
-    display:inline-flex; align-items:center; gap:10px;
-    border:1px solid var(--ash);
-    background:transparent;
-    color:var(--paper);
-    cursor:pointer;
-    transition:border-color .2s ease, color .2s ease, background .2s ease;
-  }
-  .btn.primary{
-    background:var(--tally);
-    border-color:var(--tally);
-    color:var(--void);
-    font-weight:600;
-  }
-  .btn.primary:hover{ background:#ff5a3f; }
-  .btn:not(.primary):hover{ border-color:var(--paper-dim); color:var(--paper); }
-  .btn .tri{
-    width:0; height:0;
-    border-top:5px solid transparent;
-    border-bottom:5px solid transparent;
-    border-left:8px solid currentColor;
-  }
+    .corner.bl {
+      bottom: calc(var(--scrub-h) + 12px);
+      left: 12px;
+      border-bottom-width: 2px;
+      border-left-width: 2px;
+    }
 
-  .hero-stats{
-    display:flex; gap:28px;
-    margin-top:48px;
-    font-family:var(--font-mono);
-    flex-wrap:wrap;
-  }
-  .hero-stats div{ border-left:1px solid var(--ash); padding-left:12px; }
-  .hero-stats b{ display:block; font-size:20px; color:var(--paper); font-weight:500; }
-  .hero-stats span{ font-size:11px; color:var(--paper-dim); letter-spacing:.04em; }
+    .corner.br {
+      bottom: calc(var(--scrub-h) + 12px);
+      right: 12px;
+      border-bottom-width: 2px;
+      border-right-width: 2px;
+    }
 
-  /* preview monitor */
-  .monitor{
-    border:1px solid var(--ash);
-    background:var(--panel);
-    padding:16px;
-  }
-  .monitor-head{
-    display:flex; justify-content:space-between; align-items:center;
-    font-family:var(--font-mono);
-    font-size:10.5px;
-    color:var(--paper-dim);
-    margin-bottom:12px;
-  }
-  .monitor-screen{
-    aspect-ratio:16/10;
-    background:
-      radial-gradient(circle at 30% 20%, rgba(60,144,137,.18), transparent 60%),
-      radial-gradient(circle at 75% 80%, rgba(232,65,44,.14), transparent 55%),
-      var(--void);
-    border:1px solid var(--ash-soft);
-    display:flex; align-items:center; justify-content:center;
-    position:relative;
-    overflow:hidden;
-  }
-  .monitor-screen .play-ring{
-    width:56px; height:56px;
-    border:1px solid var(--paper-dim);
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .monitor-screen .play-ring .tri{
-    border-top:8px solid transparent;
-    border-bottom:8px solid transparent;
-    border-left:13px solid var(--paper);
-    margin-left:3px;
-  }
-  .waveform{
-    position:absolute; bottom:0; left:0; right:0;
-    height:34px;
-    display:flex; align-items:flex-end; gap:2px;
-    padding:0 8px 6px;
-    opacity:.5;
-  }
-  .waveform span{
-    flex:1;
-    background:var(--teal);
-    animation:bar 1.4s ease-in-out infinite;
-  }
-  @keyframes bar{ 0%,100%{ height:15%; } 50%{ height:80%; } }
-  .monitor-foot{
-    display:flex; justify-content:space-between;
-    font-family:var(--font-mono);
-    font-size:10.5px;
-    color:var(--paper-dim);
-    margin-top:12px;
-  }
+    @media (max-width:720px) {
+      .corner {
+        display: none;
+      }
+    }
 
-  @media (prefers-reduced-motion:reduce){
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
-    .hero-title .line{ transform:none; }
-  }
+    /* ============ TOP CHROME BAR ============ */
+    .chrome {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--chrome-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(13, 12, 10, .92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--ash);
+      z-index: 40;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: .03em;
+    }
 
-  /* ============ SECTION SHELL ============ */
-  section{ padding:96px 0; border-top:1px solid var(--ash-soft); }
-  .h2{
-    font-family:var(--font-display);
-    font-size:clamp(34px,5vw,54px);
-    letter-spacing:.01em;
-    margin-bottom:16px;
-  }
-  .lede{ color:var(--paper-dim); max-width:56ch; margin-bottom:52px; font-size:15.5px; }
+    .chrome-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  /* ============ WORK ============ */
-  .work-list{ display:flex; flex-direction:column; gap:64px; }
-  .clip{
-    display:grid;
-    grid-template-columns:.9fr 1.1fr;
-    gap:44px;
-    align-items:center;
-  }
-  .clip:nth-child(even){ direction:rtl; }
-  .clip:nth-child(even) > *{ direction:ltr; }
-  @media (max-width:860px){
-    .clip, .clip:nth-child(even){ grid-template-columns:1fr; direction:ltr; }
-  }
+    .rec-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--tally);
+      animation: pulse 1.6s ease-in-out infinite;
+      flex-shrink: 0;
+    }
 
-  .clip-frame{
-    position:relative;
-    border:1px solid var(--ash);
-    aspect-ratio:4/3;
-    background:var(--panel);
-    display:flex; align-items:center; justify-content:center;
-    overflow:hidden;
-  }
-  .clip-frame .frame-bg{
-    position:absolute; inset:0;
-    opacity:.9;
-  }
-  .clip-frame .tc-badge{
-    position:absolute; top:10px; left:10px;
-    font-family:var(--font-mono); font-size:10px;
-    background:rgba(13,12,10,.75);
-    padding:4px 7px;
-    color:var(--paper-dim);
-    border:1px solid var(--ash-soft);
-  }
-  .clip-frame .placeholder-note{
-    position:absolute; bottom:10px; left:10px; right:10px;
-    font-family:var(--font-mono); font-size:9.5px;
-    color:var(--paper-dim);
-    background:rgba(13,12,10,.75);
-    padding:6px 8px;
-    border:1px dashed var(--ash);
-  }
-  .clip-frame .play-ring{
-    width:60px; height:60px; border-radius:50%;
-    border:1px solid var(--paper-dim);
-    display:flex; align-items:center; justify-content:center;
-    z-index:2; background:rgba(13,12,10,.4);
-  }
-  .clip-frame .play-ring .tri{
-    border-top:9px solid transparent; border-bottom:9px solid transparent;
-    border-left:14px solid var(--paper); margin-left:3px;
-  }
+    @keyframes pulse {
 
-  .clip-tag{
-    display:inline-flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;
-  }
-  .clip-tag span{
-    font-family:var(--font-mono); font-size:10.5px;
-    border:1px solid var(--ash);
-    padding:4px 9px;
-    color:var(--paper-dim);
-  }
-  .clip-title{
-    font-family:var(--font-display);
-    font-size:clamp(28px,3.6vw,40px);
-    letter-spacing:.01em;
-    margin-bottom:6px;
-  }
-  .clip-role{ font-family:var(--font-mono); font-size:11.5px; color:var(--teal); margin-bottom:16px; display:block;}
-  .clip-desc{ color:var(--paper-dim); font-size:15px; max-width:52ch; margin-bottom:22px; }
-  .clip-link{
-    font-family:var(--font-mono); font-size:12.5px;
-    display:inline-flex; align-items:center; gap:8px;
-    color:var(--paper); border-bottom:1px solid var(--ash);
-    padding-bottom:3px;
-  }
-  .clip-link .tri{
-    border-top:4px solid transparent; border-bottom:4px solid transparent;
-    border-left:7px solid var(--tally);
-  }
+      0%,
+      100% {
+        opacity: 1;
+      }
 
-  /* ============ ABOUT / TOOLKIT ============ */
-  .about-grid{ display:grid; grid-template-columns:1fr 1.3fr; gap:56px; }
-  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
-  .about-copy p{ color:var(--paper-dim); font-size:15.5px; margin-bottom:16px; max-width:52ch; }
-  .about-copy p b{ color:var(--paper); font-weight:600; }
+      50% {
+        opacity: .25;
+      }
+    }
 
-  .toolkit-group{ margin-bottom:28px; }
-  .toolkit-label{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.05em;
-    color:var(--tally); margin-bottom:12px;
-  }
-  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
-  .chip{
-    font-family:var(--font-mono); font-size:12px;
-    border:1px solid var(--ash);
-    padding:7px 12px;
-    color:var(--paper);
-    background:var(--panel);
-  }
+    .chrome-mark {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: .03em;
+      color: var(--paper);
+    }
 
-  /* ============ EXPERIENCE ============ */
-  .exp-row{
-    display:grid; grid-template-columns:150px 1fr;
-    gap:24px;
-    padding:26px 0;
-    border-bottom:1px solid var(--ash-soft);
-  }
-  .exp-row:first-of-type{ border-top:1px solid var(--ash-soft); }
-  @media (max-width:640px){ .exp-row{ grid-template-columns:1fr; gap:8px; } }
-  .exp-tc{ font-family:var(--font-mono); font-size:12.5px; color:var(--paper-dim); }
-  .exp-role{ font-family:var(--font-body); font-weight:600; font-size:17px; margin-bottom:4px; }
-  .exp-org{ font-family:var(--font-mono); font-size:12px; color:var(--teal); margin-bottom:8px; display:block; }
-  .exp-desc{ color:var(--paper-dim); font-size:14.5px; max-width:60ch; }
+    .chrome-mark span {
+      color: var(--tally);
+    }
 
-  /* ============ CONTACT ============ */
-  .contact-inner{ text-align:left; }
-  .contact-title{
-    font-family:var(--font-display);
-    font-size:clamp(40px,7vw,84px);
-    line-height:.95;
-    max-width:14ch;
-    margin-bottom:28px;
-  }
-  .contact-title span{ color:var(--tally); }
-  .contact-links{ display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
+    .chrome-tc {
+      color: var(--paper-dim);
+      display: none;
+    }
 
-  footer{
-    border-top:1px solid var(--ash-soft);
-    padding:36px 0;
-  }
-  .footer-inner{
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
-    font-family:var(--font-mono); font-size:11.5px; color:var(--paper-dim);
-  }
-  .footer-inner a{ color:var(--paper-dim); border-bottom:1px solid var(--ash); padding-bottom:2px; }
-  .footer-inner a:hover{ color:var(--paper); }
+    @media (min-width:720px) {
+      .chrome-tc {
+        display: block;
+      }
+    }
 
-  /* ============ MODAL ============ */
-  .modal{
-    position:fixed; inset:0; z-index:100;
-    background:rgba(13,12,10,.92);
-    display:none;
-    align-items:center; justify-content:center;
-    padding:24px;
-  }
-  .modal.open{ display:flex; }
-  .modal-box{
-    width:100%; max-width:900px;
-    border:1px solid var(--ash);
-    background:var(--panel);
-  }
-  .modal-head{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:14px 18px;
-    border-bottom:1px solid var(--ash);
-    font-family:var(--font-mono); font-size:12px; color:var(--paper-dim);
-  }
-  .modal-close{
-    background:none; border:1px solid var(--ash); color:var(--paper);
-    font-family:var(--font-mono); font-size:11px; padding:6px 10px; cursor:pointer;
-  }
-  .modal-close:hover{ border-color:var(--tally); color:var(--tally); }
-  .modal-body{ aspect-ratio:16/9; }
-  .modal-body .clip-frame{ height:100%; aspect-ratio:auto; border:none; }
-.enter-overlay{
-  position:fixed; inset:0; z-index:200;
-  background:var(--void);
-  display:flex; align-items:center; justify-content:center;
-  transition:opacity .5s ease;
-}
-.enter-overlay.hide{
-  opacity:0;
-  pointer-events:none;
-}
-.enter-box{
-  text-align:center;
-}
-.enter-box .chrome-mark{
-  font-size:40px;
-  display:block;
-  margin-bottom:14px;
-}
-.enter-box p{
-  font-family:var(--font-mono);
-  font-size:13px;
-  color:var(--paper-dim);
-  margin-bottom:26px;
-  letter-spacing:.04em;
-}
-</style>
+    .chrome-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--teal);
+      border: 1px solid var(--ash);
+      padding: 5px 10px;
+    }
+
+    .chrome-status i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    /* ============ BOTTOM SCRUB NAV ============ */
+    .scrub {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--scrub-h);
+      background: rgba(13, 12, 10, .95);
+      border-top: 1px solid var(--ash);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scrub-track {
+      height: 2px;
+      background: var(--ash-soft);
+      position: relative;
+      width: 100%;
+    }
+
+    .scrub-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: var(--tally);
+      width: 0%;
+    }
+
+    .scrub-list {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      height: calc(var(--scrub-h) - 2px);
+    }
+
+    .scrub-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrub-list a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--paper-dim);
+      white-space: nowrap;
+      padding: 0 16px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-right: 1px solid var(--ash-soft);
+      transition: color .2s ease;
+    }
+
+    .scrub-list a:hover {
+      color: var(--paper);
+    }
+
+    .scrub-list a.active {
+      color: var(--tally);
+    }
+
+    .scrub-list a .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--ash);
+    }
+
+    .scrub-list a.active .dot {
+      background: var(--tally);
+    }
+
+    /* ============ SEQ LABEL ============ */
+    .seq {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--paper-dim);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .seq::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--ash);
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      padding: 72px 0 88px;
+      min-height: calc(100vh - var(--chrome-h) - var(--scrub-h));
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 56px;
+      align-items: center;
+      width: 100%;
+    }
+
+    @media (max-width:900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: .92;
+      letter-spacing: .01em;
+      color: var(--paper);
+      overflow: hidden;
+    }
+
+    .hero-title .line {
+      display: block;
+      transform: translateY(110%);
+      animation: wipeUp .9s cubic-bezier(.16, .9, .2, 1) forwards;
+    }
+
+    .hero-title .line:nth-child(2) {
+      animation-delay: .12s;
+      color: var(--tally);
+    }
+
+    @keyframes wipeUp {
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .role-cycle {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      letter-spacing: .06em;
+      color: var(--teal);
+      margin-top: 22px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .role-cycle .blink {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--teal);
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .hero-copy {
+      max-width: 46ch;
+      margin-top: 26px;
+      color: var(--paper-dim);
+      font-size: 16px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 38px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: .04em;
+      padding: 14px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--ash);
+      background: transparent;
+      color: var(--paper);
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+
+    .btn.primary {
+      background: var(--tally);
+      border-color: var(--tally);
+      color: var(--void);
+      font-weight: 600;
+    }
+
+    .btn.primary:hover {
+      background: #ff5a3f;
+    }
+
+    .btn:not(.primary):hover {
+      border-color: var(--paper-dim);
+      color: var(--paper);
+    }
+
+    .btn .tri {
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid currentColor;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 48px;
+      font-family: var(--font-mono);
+      flex-wrap: wrap;
+    }
+
+    .hero-stats div {
+      border-left: 1px solid var(--ash);
+      padding-left: 12px;
+    }
+
+    .hero-stats b {
+      display: block;
+      font-size: 20px;
+      color: var(--paper);
+      font-weight: 500;
+    }
+
+    .hero-stats span {
+      font-size: 11px;
+      color: var(--paper-dim);
+      letter-spacing: .04em;
+    }
+
+    /* preview monitor */
+    .monitor {
+      border: 1px solid var(--ash);
+      background: var(--panel);
+      padding: 16px;
+    }
+
+    .monitor-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--paper-dim);
+      margin-bottom: 12px;
+    }
+
+    .monitor-screen {
+      aspect-ratio: 16/10;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(60, 144, 137, .18), transparent 60%),
+        radial-gradient(circle at 75% 80%, rgba(232, 65, 44, .14), transparent 55%),
+        var(--void);
+      border: 1px solid var(--ash-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .monitor-screen .play-ring {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--paper-dim);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .monitor-screen .play-ring .tri {
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 13px solid var(--paper);
+      margin-left: 3px;
+    }
+
+    .waveform {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 34px;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      padding: 0 8px 6px;
+      opacity: .5;
+    }
+
+    .waveform span {
+      flex: 1;
+      background: var(--teal);
+      animation: bar 1.4s ease-in-out infinite;
+    }
+
+    @keyframes bar {
+
+      0%,
+      100% {
+        height: 15%;
+      }
+
+      50% {
+        height: 80%;
+      }
+    }
+
+    .monitor-foot {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--paper-dim);
+      margin-top: 12px;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .hero-title .line {
+        transform: none;
+      }
+    }
+
+    /* ============ SECTION SHELL ============ */
+    section {
+      padding: 96px 0;
+      border-top: 1px solid var(--ash-soft);
+    }
+
+    .h2 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 54px);
+      letter-spacing: .01em;
+      margin-bottom: 16px;
+    }
+
+    .lede {
+      color: var(--paper-dim);
+      max-width: 56ch;
+      margin-bottom: 52px;
+      font-size: 15.5px;
+    }
+
+    /* ============ WORK ============ */
+    .work-list {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    .clip {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .clip:nth-child(even) {
+      direction: rtl;
+    }
+
+    .clip:nth-child(even)>* {
+      direction: ltr;
+    }
+
+    @media (max-width:860px) {
+
+      .clip,
+      .clip:nth-child(even) {
+        grid-template-columns: 1fr;
+        direction: ltr;
+      }
+    }
+
+    .clip-frame {
+      position: relative;
+      border: 1px solid var(--ash);
+      aspect-ratio: 4/3;
+      background: var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .clip-frame .frame-bg {
+      position: absolute;
+      inset: 0;
+      opacity: .9;
+    }
+
+    .clip-frame .tc-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: rgba(13, 12, 10, .75);
+      padding: 4px 7px;
+      color: var(--paper-dim);
+      border: 1px solid var(--ash-soft);
+    }
+
+    .clip-frame .placeholder-note {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--paper-dim);
+      background: rgba(13, 12, 10, .75);
+      padding: 6px 8px;
+      border: 1px dashed var(--ash);
+    }
+
+    .clip-frame .play-ring {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid var(--paper-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      background: rgba(13, 12, 10, .4);
+    }
+
+    .clip-frame .play-ring .tri {
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-left: 14px solid var(--paper);
+      margin-left: 3px;
+    }
+
+    .clip-tag {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .clip-tag span {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      border: 1px solid var(--ash);
+      padding: 4px 9px;
+      color: var(--paper-dim);
+    }
+
+    .clip-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.6vw, 40px);
+      letter-spacing: .01em;
+      margin-bottom: 6px;
+    }
+
+    .clip-role {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--teal);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .clip-desc {
+      color: var(--paper-dim);
+      font-size: 15px;
+      max-width: 52ch;
+      margin-bottom: 22px;
+    }
+
+    .clip-link {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--paper);
+      border-bottom: 1px solid var(--ash);
+      padding-bottom: 3px;
+    }
+
+    .clip-link .tri {
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 7px solid var(--tally);
+    }
+
+    /* ============ ABOUT / TOOLKIT ============ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 56px;
+    }
+
+    @media (max-width:860px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-copy p {
+      color: var(--paper-dim);
+      font-size: 15.5px;
+      margin-bottom: 16px;
+      max-width: 52ch;
+    }
+
+    .about-copy p b {
+      color: var(--paper);
+      font-weight: 600;
+    }
+
+    .toolkit-group {
+      margin-bottom: 28px;
+    }
+
+    .toolkit-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .05em;
+      color: var(--tally);
+      margin-bottom: 12px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      border: 1px solid var(--ash);
+      padding: 7px 12px;
+      color: var(--paper);
+      background: var(--panel);
+    }
+
+    /* ============ EXPERIENCE ============ */
+    .exp-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--ash-soft);
+    }
+
+    .exp-row:first-of-type {
+      border-top: 1px solid var(--ash-soft);
+    }
+
+    @media (max-width:640px) {
+      .exp-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    .exp-tc {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--paper-dim);
+    }
+
+    .exp-role {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .exp-org {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .exp-desc {
+      color: var(--paper-dim);
+      font-size: 14.5px;
+      max-width: 60ch;
+    }
+
+    /* ============ CONTACT ============ */
+    .contact-inner {
+      text-align: left;
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 7vw, 84px);
+      line-height: .95;
+      max-width: 14ch;
+      margin-bottom: 28px;
+    }
+
+    .contact-title span {
+      color: var(--tally);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    footer {
+      border-top: 1px solid var(--ash-soft);
+      padding: 36px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--paper-dim);
+    }
+
+    .footer-inner a {
+      color: var(--paper-dim);
+      border-bottom: 1px solid var(--ash);
+      padding-bottom: 2px;
+    }
+
+    .footer-inner a:hover {
+      color: var(--paper);
+    }
+
+    /* ============ MODAL ============ */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(13, 12, 10, .92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 900px;
+      border: 1px solid var(--ash);
+      background: var(--panel);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--ash);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--paper-dim);
+    }
+
+    .modal-close {
+      background: none;
+      border: 1px solid var(--ash);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      border-color: var(--tally);
+      color: var(--tally);
+    }
+
+    .modal-body {
+      aspect-ratio: 16/9;
+    }
+
+    .modal-body .clip-frame {
+      height: 100%;
+      aspect-ratio: auto;
+      border: none;
+    }
+
+    .enter-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--void);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .5s ease;
+    }
+
+    .enter-overlay.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .enter-box {
+      text-align: center;
+    }
+
+    .enter-box .chrome-mark {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .enter-box p {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--paper-dim);
+      margin-bottom: 26px;
+      letter-spacing: .04em;
+    }
+  </style>
 </head>
+
 <body>
   <div class="corner tl"></div>
   <div class="corner tr"></div>
@@ -559,10 +999,12 @@
   <header class="chrome">
     <div class="chrome-left">
       <span class="rec-dot" aria-hidden="true"></span>
-      <span class="chrome-mark">RS<span>.</span></span>
+      <a href="#intro" class="chrome-mark">RS<span>.</span></a>
     </div>
-    <div class="chrome-tc" id="liveTc" aria-hidden="true">00:00:00:00</div>
-    <div class="chrome-status"><i aria-hidden="true"></i> AVAILABLE FOR WORK</div>
+    <a class="chrome-status" href="#contact">
+  <i aria-hidden="true"></i> AVAILABLE FOR WORK
+</a>
+    
   </header>
 
   <main>
@@ -576,10 +1018,14 @@
               <span class="line">RAMISH</span>
               <span class="line">SARWAR</span>
             </h1>
-            <div class="role-cycle"><span class="blink" aria-hidden="true"></span><span id="roleText">VIDEO EDITOR</span></div>
-            <p class="hero-copy">I cut raw footage and rough briefs into short-form content people actually finish watching, then build the brand system that holds it all together — reels, motion graphics, logos, and everything in between.</p>
+            <div class="role-cycle"><span class="blink" aria-hidden="true"></span><span id="roleText">VIDEO
+                EDITOR</span></div>
+            <p class="hero-copy">I cut raw footage and rough briefs into short-form content people actually finish
+              watching, then build the brand system that holds it all together — reels, motion graphics, logos, and
+              everything in between.</p>
             <div class="hero-ctas">
-              <button class="btn primary" id="openReel"><span class="tri" aria-hidden="true"></span> Watch Showreel</button>
+              <button class="btn primary" id="openReel"><span class="tri" aria-hidden="true"></span> Watch
+                Showreel</button>
               <a class="btn" href="#work">View Selected Work</a>
             </div>
             <div class="hero-stats">
@@ -592,20 +1038,14 @@
           <div class="monitor" aria-hidden="true">
             <div class="monitor-head"><span>PREVIEW.MOV</span><span>4K · 24FPS</span></div>
             <div class="monitor-screen">
-  <video
-    id="homeShowreel"
-    src="showreel.mp4"
-    autoplay
-    loop
-    muted
-    playsinline
-    style="width:100%; height:100%; object-fit:cover;">
-</video>
-</div>
+              <video id="homeShowreel" src="showreel.mp4" autoplay loop muted playsinline
+                style="width:100%; height:100%; object-fit:cover;">
+              </video>
+            </div>
             <div class="monitor-foot">
-  <span>00:00:00:00</span>
-  <span>/ 00:00:30:00</span>
-</div>
+              <span>00:00:00:00</span>
+              <span>/ 00:00:30:00</span>
+            </div>
           </div>
         </div>
       </div>
@@ -616,7 +1056,8 @@
       <div class="wrap">
         <div class="seq">SEQ. 01 — SELECTED WORK</div>
         <h2 class="h2">Recent cuts.</h2>
-        <p class="lede">Three projects that span the range: brand content on a weekly posting cadence, a self-initiated AI storytelling series, and standalone branding work.</p>
+        <p class="lede">Three projects that span the range: brand content on a weekly posting cadence, a self-initiated
+          AI storytelling series, and standalone branding work.</p>
 
         <div class="work-list">
 
@@ -624,13 +1065,17 @@
           <article class="clip">
             <div class="clip-frame">
               <div class="tc-badge">CLIP_01</div>
-              <video class="scroll-autoplay" src="WhatsApp Video 2026-09-10 at 10.28.08 PM.mp4" controls playsinline muted preload="metadata"></video>
+              <video class="scroll-autoplay" src="WhatsApp Video 2026-09-10 at 10.28.08 PM.mp4" controls playsinline
+                muted preload="metadata"></video>
             </div>
             <div>
-              <div class="clip-tag"><span>Reels</span><span>Motion Graphics</span><span>Branding</span><span>Promo Video</span></div>
+              <div class="clip-tag"><span>Reels</span><span>Motion Graphics</span><span>Branding</span><span>Promo
+                  Video</span></div>
               <h3 class="clip-title">Just Move — Full Brand Campaign</h3>
               <span class="clip-role">Social Media Manager / Video &amp; Graphic Designer</span>
-              <p class="clip-desc">A full content system for a premium Airbnb apartment brand in Islamabad — Reels, feed posts, stories and promo video under one visual identity, run end to end from concept and filming through edit, motion graphics and publishing.</p>
+              <p class="clip-desc">A full content system for a premium Airbnb apartment brand in Islamabad — Reels, feed
+                posts, stories and promo video under one visual identity, run end to end from concept and filming
+                through edit, motion graphics and publishing.</p>
               <a class="clip-link" href="just-move.html"><span class="tri"></span> Explore Project</a>
             </div>
           </article>
@@ -641,10 +1086,14 @@
               <img src="taleverse logo.jpeg" alt="TaleVerse">
             </div>
             <div>
-              <div class="clip-tag"><span>AI-Assisted</span><span>Short-Form Series</span><span>Character Design</span><span>Sound</span></div>
+              <div class="clip-tag"><span>AI-Assisted</span><span>Short-Form Series</span><span>Character
+                  Design</span><span>Sound</span></div>
               <h3 class="clip-title">TaleVerse — AI Storytelling</h3>
               <span class="clip-role">Self-Initiated Project</span>
-              <p class="clip-desc">A short-form storytelling series for Reels, TikTok and YouTube Shorts, built from scratch — concept, character design, episode structure, and AI-generated footage cut into cinematic narratives with a focus on hooks, pacing and retention. Full branding — logo, identity, characters — made with CapCut, Canva, Gemini and Trimz.</p>
+              <p class="clip-desc">A short-form storytelling series for Reels, TikTok and YouTube Shorts, built from
+                scratch — concept, character design, episode structure, and AI-generated footage cut into cinematic
+                narratives with a focus on hooks, pacing and retention. Full branding — logo, identity, characters —
+                made with CapCut, Canva, Gemini and Trimz.</p>
               <a class="clip-link" href="taleverse.html"><span class="tri"></span> Explore Project</a>
             </div>
           </article>
@@ -652,13 +1101,16 @@
           <!-- CLIP 03 -->
           <article class="clip">
             <div class="clip-frame">
-  <img src="branding cover.jpg" alt="Branding & Visual Identity">
-</div>
+              <img src="branding cover.jpg" alt="Branding & Visual Identity">
+            </div>
             <div>
-              <div class="clip-tag"><span>Logo Design</span><span>Social Templates</span><span>Print &amp; Digital</span></div>
+              <div class="clip-tag"><span>Logo Design</span><span>Social Templates</span><span>Print &amp;
+                  Digital</span></div>
               <h3 class="clip-title">Branding &amp; Visual Identity</h3>
               <span class="clip-role">Freelance &amp; Client Work</span>
-              <p class="clip-desc">Logos and complete visual identities for brands and digital projects — reel covers, banners, ads and branded templates built to hold together across every platform a client posts to, applying typography, composition and hierarchy consistently.</p>
+              <p class="clip-desc">Logos and complete visual identities for brands and digital projects — reel covers,
+                banners, ads and branded templates built to hold together across every platform a client posts to,
+                applying typography, composition and hierarchy consistently.</p>
               <a class="clip-link" href="branding.html"><span class="tri"></span> View Gallery</a>
             </div>
           </article>
@@ -674,9 +1126,13 @@
         <h2 class="h2">Editor first, brand builder always.</h2>
         <div class="about-grid">
           <div class="about-copy">
-            <p>I've spent the last two years turning raw footage and rough briefs into short-form and long-form video for social — reels, promos, and branded content built around strong hooks, pacing and structure.</p>
-            <p>Alongside editing, I carry a <b>graphic design and branding background</b> from freelance work and design internships, so the visual identity around a video — logo, templates, colour, type — stays consistent everywhere it's posted.</p>
-            <p>I lean on AI-assisted tools where they speed up the workflow without cutting corners, and I'm comfortable working independently in a remote, deadline-driven setup.</p>
+            <p>I've spent the last two years turning raw footage and rough briefs into short-form and long-form video
+              for social — reels, promos, and branded content built around strong hooks, pacing and structure.</p>
+            <p>Alongside editing, I carry a <b>graphic design and branding background</b> from freelance work and design
+              internships, so the visual identity around a video — logo, templates, colour, type — stays consistent
+              everywhere it's posted.</p>
+            <p>I lean on AI-assisted tools where they speed up the workflow without cutting corners, and I'm comfortable
+              working independently in a remote, deadline-driven setup.</p>
           </div>
           <div>
             <div class="toolkit-group">
@@ -723,7 +1179,8 @@
           <div>
             <div class="exp-role">Social Media Manager / Video &amp; Graphic Designer</div>
             <span class="exp-org">Just Move LLP</span>
-            <p class="exp-desc">Reels and long-form video for Instagram, motion graphics and kinetic typography, plus social posts, banners, logos and full branding for the platform.</p>
+            <p class="exp-desc">Reels and long-form video for Instagram, motion graphics and kinetic typography, plus
+              social posts, banners, logos and full branding for the platform.</p>
           </div>
         </div>
 
@@ -732,16 +1189,8 @@
           <div>
             <div class="exp-role">Freelance Graphic &amp; Video Designer</div>
             <span class="exp-org">Self-Employed — Remote</span>
-            <p class="exp-desc">Logos, social posts, reels and mood boards for independent clients — full project ownership from concept to delivery, adapting style to each client's audience.</p>
-          </div>
-        </div>
-
-        <div class="exp-row">
-          <div class="exp-tc">JUN – SEP 2025</div>
-          <div>
-            <div class="exp-role">Graphic Design Intern</div>
-            <span class="exp-org">Evosoft</span>
-            <p class="exp-desc">Social graphics and promotional materials aligned to brand guidelines and campaign goals, working within the design team.</p>
+            <p class="exp-desc">Logos, social posts, reels and mood boards for independent clients — full project
+              ownership from concept to delivery, adapting style to each client's audience.</p>
           </div>
         </div>
 
@@ -750,7 +1199,8 @@
           <div>
             <div class="exp-role">Graphic Design Intern</div>
             <span class="exp-org">Codexcue</span>
-            <p class="exp-desc">Social creatives and marketing visuals, applying typography, composition and layout principles to client-ready assets.</p>
+            <p class="exp-desc">Social creatives and marketing visuals, applying typography, composition and layout
+              principles to client-ready assets.</p>
           </div>
         </div>
       </div>
@@ -761,11 +1211,16 @@
       <div class="wrap contact-inner">
         <div class="seq">SEQ. 04 — CONTACT</div>
         <h2 class="contact-title">Got footage? <span>Let's cut it.</span></h2>
-        <p class="lede" style="margin-bottom:0;">Open for freelance projects, brand partnerships, and full-time roles. Usually replies within a day.</p>
+        <p class="lede" style="margin-bottom:0;">Open for freelance projects, brand partnerships, and full-time roles.
+          Usually replies within a day.</p>
         <div class="contact-links">
-          <a class="btn primary" href="mailto:ramishsarwar3@gmail.com"><span class="tri"></span> Email Me</a>
-          <a class="btn" href="https://www.instagram.com/justmovellp.co/" target="_blank" rel="noopener">Instagram</a>
-          <a class="btn" href="https://linkedin.com"><!-- TODO: confirm LinkedIn URL -->LinkedIn</a>
+          <a class="btn primary" href="https://mail.google.com/mail/?view=cm&fs=1&to=ramishsarwar3@gmail.com"
+            target="_blank">
+            <span class="tri"></span> Email Me
+          </a>
+          <a class="btn"
+            href="https://www.linkedin.com/in/ramish-sarwar/"><!-- TODO: confirm LinkedIn URL -->LinkedIn</a>
+            <a class="btn" href="Ramish Sarwar- Video Editor & Graphic Designer.pdf" target="_blank">View My Resume</a>
         </div>
       </div>
     </section>
@@ -773,15 +1228,18 @@
 
   <footer>
     <div class="wrap footer-inner">
-      <span>© 2026 RAMISH SARWAR — REEL_02.PROJ</span>
-      <span>Looking for UI/UX &amp; dev work? <a href="https://ramishsarwar.vercel.app/" target="_blank" rel="noopener">View Portfolio 01 →</a></span>
+      <span>© 2026 RAMISH SARWAR</span>
+      <span>Looking for UI/UX &amp; dev work? <a href="https://ramishsarwar.vercel.app/" target="_blank"
+          rel="noopener">View Portfolio 01 →</a></span>
       <span>END — 00:02:47:19</span>
     </div>
   </footer>
 
   <!-- ============ BOTTOM SCRUB NAV ============ -->
   <nav class="scrub" aria-label="Section navigation">
-    <div class="scrub-track"><div class="scrub-fill" id="scrubFill"></div></div>
+    <div class="scrub-track">
+      <div class="scrub-fill" id="scrubFill"></div>
+    </div>
     <div class="scrub-list" id="scrubList">
       <a href="#intro" data-tc="00:00" class="active"><span class="dot"></span>00:00 INTRO</a>
       <a href="#work" data-tc="00:24"><span class="dot"></span>00:24 WORK</a>
@@ -799,173 +1257,169 @@
         <button class="modal-close" id="closeReel">CLOSE ✕</button>
       </div>
       <div class="modal-body">
-  <video 
-    id="modalShowreel"
-    src="showreel.mp4" 
-    controls 
-    autoplay 
-    playsinline
-    style="width:100%; height:100%; object-fit:contain; display:block;">
-  </video>
-</div>
+        <video id="modalShowreel" src="showreel.mp4" controls autoplay playsinline
+          style="width:100%; height:100%; object-fit:contain; display:block;">
+        </video>
+      </div>
     </div>
   </div>
 
-<script>
-  // live SMPTE-style timecode in the top chrome bar
-  const tcEl = document.getElementById('liveTc');
-  let frame = 0;
-  setInterval(() => {
-    const now = new Date();
-    frame = (frame + 1) % 24;
-    const hh = String(now.getHours()).padStart(2,'0');
-    const mm = String(now.getMinutes()).padStart(2,'0');
-    const ss = String(now.getSeconds()).padStart(2,'0');
-    const ff = String(frame).padStart(2,'0');
-    if (tcEl) tcEl.textContent = `${hh}:${mm}:${ss}:${ff}`;
-  }, 1000/24);
+  <script>
+    // live SMPTE-style timecode in the top chrome bar
+    const tcEl = document.getElementById('liveTc');
+    let frame = 0;
+    setInterval(() => {
+      const now = new Date();
+      frame = (frame + 1) % 24;
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      const ff = String(frame).padStart(2, '0');
+      if (tcEl) tcEl.textContent = `${hh}:${mm}:${ss}:${ff}`;
+    }, 1000 / 24);
 
-  // waveform bars
-  const wf = document.getElementById('waveform');
-  if (wf) {
-    for (let i=0;i<40;i++){
-      const s = document.createElement('span');
-      s.style.animationDelay = (Math.random()*1.4).toFixed(2)+'s';
-      wf.appendChild(s);
+    // waveform bars
+    const wf = document.getElementById('waveform');
+    if (wf) {
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement('span');
+        s.style.animationDelay = (Math.random() * 1.4).toFixed(2) + 's';
+        wf.appendChild(s);
+      }
     }
-  }
 
-  // role cycle text
-  const roles = ['VIDEO EDITOR','MOTION DESIGNER','BRAND & CONTENT'];
-  let ri = 0;
-  const roleEl = document.getElementById('roleText');
-  setInterval(()=>{
-    ri = (ri+1) % roles.length;
-    if (roleEl) roleEl.textContent = roles[ri];
-  }, 2400);
+    // role cycle text
+    const roles = ['VIDEO EDITOR', 'MOTION DESIGNER', 'BRAND & CONTENT'];
+    let ri = 0;
+    const roleEl = document.getElementById('roleText');
+    setInterval(() => {
+      ri = (ri + 1) % roles.length;
+      if (roleEl) roleEl.textContent = roles[ri];
+    }, 2400);
 
-  // scrub nav active state + progress fill
-  const links = document.querySelectorAll('.scrub-list a');
-  const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
-  const fill = document.getElementById('scrubFill');
+    // scrub nav active state + progress fill
+    const links = document.querySelectorAll('.scrub-list a');
+    const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+    const fill = document.getElementById('scrubFill');
 
-  function onScroll(){
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollTop/docHeight)*100 : 0;
-    if (fill) fill.style.width = pct + '%';
+    function onScroll() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (fill) fill.style.width = pct + '%';
 
-    let current = sections[0];
-    sections.forEach(sec=>{
-      if (sec && sec.getBoundingClientRect().top - 120 <= 0) current = sec;
-    });
-    links.forEach(a=>{
-      a.classList.toggle('active', document.querySelector(a.getAttribute('href')) === current);
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+      let current = sections[0];
+      sections.forEach(sec => {
+        if (sec && sec.getBoundingClientRect().top - 120 <= 0) current = sec;
+      });
+      links.forEach(a => {
+        a.classList.toggle('active', document.querySelector(a.getAttribute('href')) === current);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     // showreel modal — sirf modal + elements ka reference
-  const modal = document.getElementById('reelModal');
-  const modalVideo = document.getElementById('modalShowreel');
+    const modal = document.getElementById('reelModal');
+    const modalVideo = document.getElementById('modalShowreel');
 
-  const homeShowreel = document.getElementById('homeShowreel');
-  const monitor = homeShowreel?.closest('.monitor');
+    const homeShowreel = document.getElementById('homeShowreel');
+    const monitor = homeShowreel?.closest('.monitor');
 
-  let userMuted = false;
-  let userInteracted = false;
-  let muteButton = null;
+    let userMuted = false;
+    let userInteracted = false;
+    let muteButton = null;
 
-  function openModal() {
-    modal.classList.add('open');
-    modalVideo.currentTime = 0;
-    modalVideo.muted = false;
-    modalVideo.play().catch(() => {});
+    function openModal() {
+      modal.classList.add('open');
+      modalVideo.currentTime = 0;
+      modalVideo.muted = false;
+      modalVideo.play().catch(() => { });
 
-    if (homeShowreel) {
-      homeShowreel.pause();
-      homeShowreel.muted = true;
-      if (muteButton) muteButton.textContent = '🔇';
-    }
-  }
-
-  function closeModal() {
-    modal.classList.remove('open');
-    modalVideo.pause();
-
-    if (homeShowreel && monitor) {
-      const rect = monitor.getBoundingClientRect();
-      const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (isVisible) {
-        homeShowreel.muted = userInteracted ? userMuted : true;
-        homeShowreel.play().catch(() => {});
-        if (muteButton) muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
+      if (homeShowreel) {
+        homeShowreel.pause();
+        homeShowreel.muted = true;
+        if (muteButton) muteButton.textContent = '🔇';
       }
     }
-  }
 
-  document.getElementById('openReel').addEventListener('click', openModal);
-  document.getElementById('closeReel').addEventListener('click', closeModal);
-  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+    function closeModal() {
+      modal.classList.remove('open');
+      modalVideo.pause();
 
-  // HERO SHOWREEL — auto play/pause + auto mute/unmute on scroll + auto-unmute on first interaction
-  if (homeShowreel && monitor) {
-
-    homeShowreel.muted = true;
-
-    muteButton = document.createElement('button');
-    muteButton.className = 'preview-mute';
-    muteButton.type = 'button';
-    muteButton.textContent = '🔇';
-    muteButton.setAttribute('aria-label', 'Mute or unmute preview');
-    monitor.appendChild(muteButton);
-
-    muteButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      userMuted = !userMuted;
-      homeShowreel.muted = userMuted;
-      muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
-    });
-
-    monitor.style.cursor = 'pointer';
-    monitor.addEventListener('click', (e) => {
-      if (e.target === muteButton) return;
-      openModal();
-    });
-
-    function unlockSound() {
-      if (userInteracted) return;
-      userInteracted = true;
-      if (!userMuted && !modal.classList.contains('open')) {
-        homeShowreel.muted = false;
-        muteButton.textContent = '🔊';
-      }
-    }
-    document.addEventListener('click', unlockSound, { once: true });
-    document.addEventListener('pointerdown', unlockSound, { once: true });
-    document.addEventListener('scroll', unlockSound, { once: true, passive: true });
-    document.addEventListener('keydown', unlockSound, { once: true });
-    document.addEventListener('touchstart', unlockSound, { once: true, passive: true });
-
-    const showreelObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (modal.classList.contains('open')) return; // modal khula ho tu kuch mat karo
-        if (entry.isIntersecting) {
+      if (homeShowreel && monitor) {
+        const rect = monitor.getBoundingClientRect();
+        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+        if (isVisible) {
           homeShowreel.muted = userInteracted ? userMuted : true;
-          homeShowreel.play().catch(() => {});
-          muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
-        } else {
-          homeShowreel.pause();
-          homeShowreel.muted = true;
-          muteButton.textContent = '🔇';
+          homeShowreel.play().catch(() => { });
+          if (muteButton) muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
         }
-      },
-      { threshold: 0 }
-    );
+      }
+    }
 
-    showreelObserver.observe(monitor);
-  }
-</script>
+    document.getElementById('openReel').addEventListener('click', openModal);
+    document.getElementById('closeReel').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+    // HERO SHOWREEL — auto play/pause + auto mute/unmute on scroll + auto-unmute on first interaction
+    if (homeShowreel && monitor) {
+
+      homeShowreel.muted = true;
+
+      muteButton = document.createElement('button');
+      muteButton.className = 'preview-mute';
+      muteButton.type = 'button';
+      muteButton.textContent = '🔇';
+      muteButton.setAttribute('aria-label', 'Mute or unmute preview');
+      monitor.appendChild(muteButton);
+
+      muteButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userMuted = !userMuted;
+        homeShowreel.muted = userMuted;
+        muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
+      });
+
+      monitor.style.cursor = 'pointer';
+      monitor.addEventListener('click', (e) => {
+        if (e.target === muteButton) return;
+        openModal();
+      });
+
+      function unlockSound() {
+        if (userInteracted) return;
+        userInteracted = true;
+        if (!userMuted && !modal.classList.contains('open')) {
+          homeShowreel.muted = false;
+          muteButton.textContent = '🔊';
+        }
+      }
+      document.addEventListener('click', unlockSound, { once: true });
+      document.addEventListener('pointerdown', unlockSound, { once: true });
+      document.addEventListener('scroll', unlockSound, { once: true, passive: true });
+      document.addEventListener('keydown', unlockSound, { once: true });
+      document.addEventListener('touchstart', unlockSound, { once: true, passive: true });
+
+      const showreelObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (modal.classList.contains('open')) return; // modal khula ho tu kuch mat karo
+          if (entry.isIntersecting) {
+            homeShowreel.muted = userInteracted ? userMuted : true;
+            homeShowreel.play().catch(() => { });
+            muteButton.textContent = homeShowreel.muted ? '🔇' : '🔊';
+          } else {
+            homeShowreel.pause();
+            homeShowreel.muted = true;
+            muteButton.textContent = '🔇';
+          }
+        },
+        { threshold: 0 }
+      );
+
+      showreelObserver.observe(monitor);
+    }
+  </script>
 </body>
+
 </html>
