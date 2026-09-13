@@ -328,7 +328,7 @@
 
     /* ============ HERO ============ */
     .hero {
-      padding: 72px 0 88px;
+     
       min-height: calc(100vh - var(--chrome-h) - var(--scrub-h));
       display: flex;
       align-items: center;
@@ -986,6 +986,12 @@
       margin-bottom: 26px;
       letter-spacing: .04em;
     }
+    .chrome-tc{
+  color:var(--paper-dim);
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.03em;
+}
   </style>
 </head>
 
@@ -1001,6 +1007,7 @@
       <span class="rec-dot" aria-hidden="true"></span>
       <a href="#intro" class="chrome-mark">RS<span>.</span></a>
     </div>
+    <div class="chrome-tc" id="liveTc">00:00:00:00</div>
     <a class="chrome-status" href="#contact">
   <i aria-hidden="true"></i> AVAILABLE FOR WORK
 </a>
@@ -1027,6 +1034,7 @@
               <button class="btn primary" id="openReel"><span class="tri" aria-hidden="true"></span> Watch
                 Showreel</button>
               <a class="btn" href="#work">View Selected Work</a>
+               <a class="btn" href="#contact">Contact Me</a>
             </div>
             <div class="hero-stats">
               <div><b>2+</b><span>YEARS ACTIVE</span></div>
